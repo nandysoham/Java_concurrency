@@ -16,12 +16,15 @@ public class Example10 {
     final private static int POOL_SIZE = 5;
     public static void main(String[] args) {
         ThreadPoolExecutor executor = new ThreadPoolExecutor(POOL_SIZE, POOL_SIZE, 0L,
-                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(QUEUE_CAPACITY));
+                TimeUnit.MILLISECONDS, new LinkedBlockingQueue <Runnable>(QUEUE_CAPACITY));
+        // Queue will be full --> if larger number of tasks get queue up while thread size is low
 
         BoundedExecutor boundedExecutor = new BoundedExecutor(Executors.newFixedThreadPool(POOL_SIZE), QUEUE_CAPACITY);
         // if there are too many requests compared to the queue size, the executor thread also handles the request
         // notice the main thread too takes up some work, so in an iteration --> there will be 5 + 1 threads
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        // executionHandler comes into play when queue is full
+        // switch to AbortPolicy() to see --> only 5 running and 2 waiting in the queue to be run
 
         List <Integer> list = List.of(1,2,3,4,5,6,7,8,9,10);
 
@@ -39,12 +42,12 @@ public class Example10 {
                 }
             };
 
-//            executor.execute(r);
-            try {
-                boundedExecutor.submitTask(r);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            executor.execute(r);
+//            try {
+//                boundedExecutor.submitTask(r);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
         });
         executor.shutdown();
     }
@@ -52,7 +55,10 @@ public class Example10 {
 
 }
 
-
+/**
+ * Block execution --> if queue size is full
+ * Effectively #parallelprocesses = min(no_of_threads, Queuesize)
+ */
 class BoundedExecutor{
     private final Executor exec;
     private final Semaphore semaphore;

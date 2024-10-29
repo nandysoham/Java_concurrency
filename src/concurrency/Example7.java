@@ -19,10 +19,10 @@ public class Example7 {
                     try {
                         System.out.println("Thread Name " + Thread.currentThread().getName());
                         Thread.sleep(5000);
-                        System.out.println("Printing " + counter++);
                         if(counter == 5){
-                            throw new Exception("Custom exception which is never handled");
+                            throw new Exception("Custom exception thrown from runnable");
                         }
+                        System.out.println("Printing " + counter++);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

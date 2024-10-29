@@ -7,7 +7,6 @@ public class Example1 {
     final private static Example1 example1Obj = new Example1();
     public int a = 1;               // not well guarded
     public static Example1 getExample1Obj() {
-//        Example1 example1Obj = new Example1();
         return example1Obj;
     }
 

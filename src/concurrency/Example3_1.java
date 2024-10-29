@@ -6,8 +6,9 @@ import java.util.concurrent.locks.Lock;
  * Sleep vs Wait
  */
 class Interruptible1{
+    private final String lock = "lock";
     public void syncMethod1(){
-        synchronized (this){
+        synchronized (lock){
             try {
                 System.out.println("Thread 1 going to sleep");
                 Thread.sleep(5000);
@@ -21,17 +22,18 @@ class Interruptible1{
     public void syncMethod2(){
         // tries to acquire the lock
         System.out.println("Awaiting thread trying to acquire the lock");
-        synchronized (this){
+        synchronized (lock){
             System.out.println("Awaiting Thread Acquired the lock");
         }
     }
 
     public void syncMethod3(){
-        synchronized (this){
+        synchronized (lock){
             try{
+                System.out.println("Thread 3 inside method");
                 Thread.sleep(2000);
-                System.out.println("Thread going to wait()");
-                this.wait();                // current thread has to be the owner of this monitor
+                System.out.println("Thread 3 going to wait()");
+                lock.wait();                // current thread has to be the owner of this monitor
                 // you can also specify a timeout on wait(long timeout) --> will wake up automatically after this timeout
 //                new Example1().wait();
                 System.out.println("thread 3 now back from wait");
@@ -43,9 +45,9 @@ class Interruptible1{
 
     public void syncMethod4(){
         // tries to acquire the lock
-        synchronized (this){
+        synchronized (lock){
             System.out.println("Awaiting Thread Acquired the lock");
-            this.notify();
+            lock.notify();
         }
     }
 }
@@ -55,13 +57,13 @@ public class Example3_1 {
 
     public static void main(String[] args) {
         final Interruptible1 obj = new Interruptible1();
-        final Thread thread1 = new Thread(()->{
-            obj.syncMethod1();
-        });
-
-        final Thread thread2 = new Thread(()->{
-            obj.syncMethod2();
-        });
+//        final Thread thread1 = new Thread(()->{
+//            obj.syncMethod1();
+//        });
+//
+//        final Thread thread2 = new Thread(()->{
+//            obj.syncMethod2();
+//        });
 
         final Thread thread3 = new Thread(()->{
             obj.syncMethod3();

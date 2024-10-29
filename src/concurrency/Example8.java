@@ -7,6 +7,7 @@ import java.util.concurrent.*;
  * CompletionService: ExecutorService + Blocking Queue
  * 1. You can submit both callable and runnable tasks
  * 2. **Both Callables & Runnables return with a future**
+ *      For Runnable --> the future.get() --> will return the value passed as 2nd argument
  * 3. For runnable a seperate result has to be passed in completionService.submit(Runnable, result) -->
  *      which will be passed back as future upon completion
  */
@@ -41,16 +42,15 @@ public class Example8 {
 
         for(int i =0; i < 5; i++){
             try {
+                // if before I remove, the queue is full --> Queue Full Exception!
+                // THROWS EXCEPTION - QUEUE FULL
                 final Future<Integer> f = completionService.take();
                 System.out.println("Returned "+ f.get());
             }
             catch (Exception e){
                 System.out.println(e.getMessage());
             }
-
         }
-
         executor.shutdown();
-
     }
 }

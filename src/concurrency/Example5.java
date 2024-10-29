@@ -5,8 +5,8 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Runnable --> run() --> return type void, no exceptions handled
- * Callable --> returns a result and returns checked exceptions as well!
+ * Runnable --> run() --> return type void, no exceptions handled  -- executor.execute()
+ * Callable --> returns a result and returns checked exceptions as well!    -- executor.submit()
  *
  */
 public class Example5 {
@@ -21,11 +21,12 @@ public class Example5 {
 
         final long endTime = System.nanoTime() + 10L * 1000000000L;
         final FutureTask <String> futureTask = new FutureTask<>(task);            // note: returned as futures
+        // can also give (Runnable, V Result);
         final Thread thread = new Thread(futureTask);
         thread.start();
         try{
             System.out.println("Thread sleeping...");
-            thread.sleep(4000);
+            Thread.sleep(4000);
             System.out.println("Thread out of sleep");
 //            String result = futureTask.get();               // can also be an exception
             long timeLeft = endTime - System.nanoTime();

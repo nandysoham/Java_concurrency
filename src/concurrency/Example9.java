@@ -47,7 +47,7 @@ public class Example9 {
             }
         }, timeout, unit);
 
-        // incase the runnable doesn't respond to interruption it still interrupts
+        // incase the runnable doesn't respond to interruption
         // join with the main thread --> after twice the time
         taskThread.join(unit.toMillis(2*timeout));
         task.rethrow();
@@ -57,7 +57,7 @@ public class Example9 {
     public static void timedRunUsingFutures(Runnable r, long timeout, TimeUnit unit){
         final Future <?> task = taskExecute.submit(r);
         try{
-            task.get(timeout, unit);
+            task.get(timeout, unit);            // will get null if successfully returned
         } catch (TimeoutException e){
             // cancel the task
         } catch (ExecutionException | InterruptedException e) {
@@ -102,13 +102,13 @@ public class Example9 {
             throw new RuntimeException(e);
         }
 
-        System.out.println("running with futures");
-        try {
-            timedRunUsingFutures(r, 5, TimeUnit.SECONDS);
-            System.out.println("Printing next line after done with futures");
-        } catch (Throwable e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
+//        System.out.println("running with futures");
+//        try {
+//            timedRunUsingFutures(r, 5, TimeUnit.SECONDS);
+//            System.out.println("Printing next line after done with futures");
+//        } catch (Throwable e) {
+//            System.out.println(e.getMessage());
+//            throw new RuntimeException(e);
+//        }
     }
 }

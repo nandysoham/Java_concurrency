@@ -29,11 +29,9 @@ public class Example3 {
                     }
 
                     if(Thread.currentThread().isInterrupted()){
-                        try {
-                            throw new Exception("Producer thread interrupted");
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
+                        // throwing a runtime exception will stop the thread
+//                        throw new RuntimeException("Producer thread interrupted");
+
                     }
                 }
             }
@@ -52,11 +50,7 @@ public class Example3 {
                     }
                     catch (Exception e){
                         System.out.println(e.getMessage());
-                        try {
-                            throw e;
-                        } catch (InterruptedException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        throw new RuntimeException(e);
                     }
                 }
             }
@@ -71,6 +65,7 @@ public class Example3 {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+                System.out.println("Interrupting producer");
                 producer.interrupt();
             }
         });
