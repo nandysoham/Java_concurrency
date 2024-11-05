@@ -22,7 +22,7 @@ public class Example10 {
         BoundedExecutor boundedExecutor = new BoundedExecutor(Executors.newFixedThreadPool(POOL_SIZE), QUEUE_CAPACITY);
         // if there are too many requests compared to the queue size, the executor thread also handles the request
         // notice the main thread too takes up some work, so in an iteration --> there will be 5 + 1 threads
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         // executionHandler comes into play when queue is full
         // switch to AbortPolicy() to see --> only 5 running and 2 waiting in the queue to be run
 

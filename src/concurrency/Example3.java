@@ -19,20 +19,29 @@ public class Example3 {
                 int times  = 0;
                 while(true){
                     try {
-                        queue.add("data");
+                        queue.put("data");
                         System.out.println("Added Data for " + ++times + ", times");
-                    }
-                    catch (Exception e){
-                        // Queue full exception
-                       // Swallow Exception
-                        // program runs infinitely
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
 
-                    if(Thread.currentThread().isInterrupted()){
-                        // throwing a runtime exception will stop the thread
-//                        throw new RuntimeException("Producer thread interrupted");
 
-                    }
+//                    try {
+//                        // try put if you wish to wait till space is available
+//                        queue.add("data");
+//                        System.out.println("Added Data for " + ++times + ", times");
+//                    }
+//                    catch (Exception e){
+//                        // Queue full exception
+//                       // Swallow Exception
+//                        // program runs infinitely
+//                    }
+//
+//                    if(Thread.currentThread().isInterrupted()){
+//                        // throwing a runtime exception will stop the thread
+////                        throw new RuntimeException("Producer thread interrupted");
+//
+//                    }
                 }
             }
         });

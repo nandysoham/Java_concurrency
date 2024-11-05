@@ -13,7 +13,7 @@ public class Example4 {
 
         final List <String> ones = new ArrayList<>();
         final List <String> twos = new ArrayList<>();
-        for(int i =0; i < 5000000; i++){
+        for(int i =0; i < 10000000; i++){
             ones.add("one");
             twos.add("two");
         }
@@ -39,7 +39,8 @@ public class Example4 {
 
             t1.join();
             t2.join();
-
+            System.out.println("Length of normal list = "+ list.size());
+            System.out.println("Length of normal list = "+ synList.size());
             System.out.println("First index of two for normal list = "+ list.indexOf("two"));
             System.out.println("First index of two for sync list = " +synList.indexOf("two"));
             System.out.println("---------------------------------------------------------------");

@@ -116,15 +116,15 @@ public class Example11 {
             Thread thread = new Thread(() -> {
                 if (finalI % 2 == 0) {
                     try {
-//                        transferMoneyRetrant(finalI, account1, account2, 1, 2, TimeUnit.SECONDS);
-                        transferMoneyImplicit(finalI, account1, account2, 1, 2, TimeUnit.SECONDS);
+                        transferMoneyRetrant(finalI, account1, account2, 1, 2, TimeUnit.SECONDS);
+//                        transferMoneyImplicit(finalI, account1, account2, 1, 2, TimeUnit.SECONDS);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 } else {
                     try {
-//                        transferMoneyRetrant(finalI, account2, account1, 1, 2, TimeUnit.SECONDS);
-                        transferMoneyImplicit(finalI, account2, account1, 1, 2, TimeUnit.SECONDS);
+                        transferMoneyRetrant(finalI, account2, account1, 1, 2, TimeUnit.SECONDS);
+//                        transferMoneyImplicit(finalI, account2, account1, 1, 2, TimeUnit.SECONDS);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
